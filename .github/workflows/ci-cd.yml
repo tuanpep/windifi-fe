@@ -247,9 +247,9 @@ jobs:
 
           # Set output URL
           if [[ "${{ needs.quality-gate.outputs.environment }}" == "production" ]]; then
-            echo "url=http://${{ secrets.SERVER_HOST }}" >> $GITHUB_OUTPUT
+            echo "url=https://dev.windifi.com" >> $GITHUB_OUTPUT
           else
-            echo "url=http://${{ secrets.SERVER_HOST }}:3000" >> $GITHUB_OUTPUT
+            echo "url=https://dev.windifi.com" >> $GITHUB_OUTPUT
           fi
 
       - name: Health check and validation
@@ -258,10 +258,10 @@ jobs:
 
           # Set environment-specific variables
           if [[ "${{ needs.quality-gate.outputs.environment }}" == "production" ]]; then
-            HEALTH_URL="http://${{ secrets.SERVER_HOST }}/api/health"
+            HEALTH_URL="https://dev.windifi.com/api/health"
             COMPOSE_FILE="docker-compose.prod.yml"
           else
-            HEALTH_URL="http://${{ secrets.SERVER_HOST }}:3000/api/health"
+            HEALTH_URL="https://dev.windifi.com/api/health"
             COMPOSE_FILE="docker-compose.yml"
           fi
 
