@@ -52,6 +52,7 @@ This document summarizes the complete deployment setup for WindiFi Frontend with
 ### 📋 DNS Configuration Required
 
 Add the following DNS record:
+
 ```
 Type: A
 Name: dev
@@ -63,6 +64,7 @@ TTL: 300
 ### 🔒 SSL Setup
 
 Once DNS is configured, run:
+
 ```bash
 ~/setup-dev-ssl.sh
 ```
@@ -70,6 +72,7 @@ Once DNS is configured, run:
 ### 🛠 GitHub Actions Secrets
 
 Configure these secrets in your GitHub repository:
+
 ```
 SERVER_HOST=72.18.214.233
 SERVER_USER=admin
@@ -90,12 +93,14 @@ SSH_PRIVATE_KEY=<content-of-private-key>
 ### 🔄 Deployment Commands
 
 **Manual Deployment:**
+
 ```bash
 cd ~/windifi-projects/frontend
 IMAGE_TAG="your-image:tag" ./deploy.sh
 ```
 
 **CI/CD Deployment:**
+
 - Push to `develop` branch: Deploys to development
 - Push to `main` branch: Deploys to production
 
@@ -118,6 +123,7 @@ IMAGE_TAG="your-image:tag" ./deploy.sh
 ## 🎊 Ready for Production!
 
 Your WindiFi Frontend is now ready for production deployment with:
+
 - ✅ Automated CI/CD pipeline
 - ✅ SSL/HTTPS configuration
 - ✅ Domain mapping
