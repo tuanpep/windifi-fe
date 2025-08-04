@@ -206,7 +206,14 @@ jobs:
 
           # Ensure deployment directory exists and copy compose files
           ssh deployment-server "mkdir -p ~/windifi-fe-deploy"
-          scp docker-compose*.yml deployment-server:~/windifi-fe-deploy/
+          
+          # Use SFTP instead of SCP for better compatibility
+          sftp -o "StrictHostKeyChecking=yes" deployment-server <<EOF
+            cd ~/windifi-fe-deploy
+            put docker-compose.yml
+            put docker-compose.prod.yml
+            quit
+          EOF
 
           ssh deployment-server "
             export IMAGE_TAG='$IMAGE_TAG'
