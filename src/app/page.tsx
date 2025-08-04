@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  Badge,
-  Box,
-  Heading,
-  Text,
-  VStack
-} from '@chakra-ui/react';
+import { Badge, Box, Heading, Text, VStack } from '@chakra-ui/react';
 
 export default function Home() {
   return (

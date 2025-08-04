@@ -50,7 +50,7 @@ module.exports = {
     ],
     'subject-empty': [2, 'never'],
     'subject-full-stop': [2, 'never', '.'],
-    'subject-max-length': [2, 'always', 72],
+    'subject-max-length': [2, 'always', 100],
 
     // Body formatting
     'body-leading-blank': [2, 'always'],
@@ -70,6 +70,6 @@ module.exports = {
     'scope-case': [2, 'always', 'lower-case'],
 
     // Header formatting
-    'header-max-length': [2, 'always', 72],
+    'header-max-length': [2, 'always', 100],
   },
 };
