@@ -206,7 +206,7 @@ jobs:
 
           # Ensure deployment directory exists and copy compose files
           ssh deployment-server "mkdir -p ~/windifi-fe-deploy"
-          
+
           # Use SFTP instead of SCP for better compatibility
           sftp -o "StrictHostKeyChecking=yes" deployment-server <<EOF
             cd ~/windifi-fe-deploy
