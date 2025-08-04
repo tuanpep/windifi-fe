@@ -1,158 +1,131 @@
 # 🚀 Quick Start Guide
 
-This guide provides the essential steps to deploy your Next.js application with a simple CI/CD pipeline.
+This guide provides the essential steps to get started with Windifi Frontend development.
 
 ## 📋 Prerequisites
 
-- [ ] GitHub repository with your code
-- [ ] Docker installed locally
-- [ ] Node.js 18+ installed
+- [ ] Node.js 20+ installed
+- [ ] Git installed
+- [ ] Code editor (VS Code recommended)
 
-## ⚡ Quick Setup (3 minutes)
+## ⚡ Development Setup (2 minutes)
 
-### 1. Run Automated Setup
+### 1. Clone and Setup
 
 ```bash
-# Clone your repository (if not already done)
+# Clone the repository
 git clone <your-repo-url>
 cd windifi-fe
 
-# Run the automated setup script
-./scripts/setup-deployment.sh
+# Install dependencies
+npm install
+
+# Setup development tools
+./scripts/setup-commit-tools.sh
 ```
 
-This script will:
-
-- ✅ Install all dependencies
-- ✅ Create environment file (`.env.local`)
-- ✅ Configure Git hooks
-
-### 2. Test Local Deployment
+### 2. Start Development
 
 ```bash
-# Test the application locally
-./scripts/deploy.sh develop
+# Start development server
+npm run dev
 
-# Verify it's working
-curl http://localhost:3000/api/health
+# Open browser to http://localhost:3000
 ```
 
-## 🚀 Deploy to Develop
-
-### 1. Push to Develop Branch
+## 🔧 Essential Commands
 
 ```bash
-git add .
-git commit -m "feat: initial deployment setup"
-git push origin develop
+# Development
+npm run dev              # Start development server
+npm run build           # Build for production
+npm run start           # Start production server
+
+# Code Quality
+npm run lint            # Run ESLint
+npm run lint:fix        # Fix ESLint issues
+npm run type-check      # TypeScript type checking
+npm run format          # Format code with Prettier
+npm run test            # Run tests
+
+# Git Workflow
+npm run commit          # Interactive commit (recommended)
 ```
 
-### 2. Monitor Deployment
+## 🏗️ Project Features
 
-- Go to your GitHub repository → Actions
-- Watch the CI/CD pipeline run
-- Verify deployment at `https://develop.yourdomain.com`
+### **Frontend Stack**
 
-## 📊 What's Included
+- ✅ Next.js 15 with App Router
+- ✅ TypeScript for type safety
+- ✅ Chakra UI for component library
+- ✅ Tailwind CSS for styling
+- ✅ React Query for data fetching
 
-### **Simple Frontend Deployment**
+### **Development Tools**
 
-- ✅ Next.js application with Docker
-- ✅ Health check endpoint
-- ✅ Basic security headers
-- ✅ Image optimization
+- ✅ ESLint + Prettier for code quality
+- ✅ Husky + lint-staged for git hooks
+- ✅ Conventional commits for standardized messages
+- ✅ Vitest for testing
 
-### **CI/CD Pipeline**
+### **Architecture**
 
-- ✅ Automated testing (lint, type-check, tests)
-- ✅ Docker image building
-- ✅ GitHub Container Registry
-- ✅ Automatic deployment on push to develop
+- ✅ Feature-based folder structure
+- ✅ Shared components and utilities
+- ✅ Type-safe API integration
+- ✅ Responsive design patterns
 
-### **Local Development**
+## 🚀 Next Steps
 
-- ✅ Docker Compose setup
-- ✅ Hot reloading
-- ✅ Environment configuration
+### For Development
 
-## 🔧 Configuration
+1. **Read the guides:**
+   - [Development Guide](./development-guide.md) - Complete workflow
+   - [Quick Reference](./quick-reference.md) - Daily commands
+   - [Project Structure](./project-structure.md) - Architecture overview
 
-### Environment Variables
+2. **Start coding:**
+   ```bash
+   # Create a new feature
+   git checkout -b feature/your-feature
+   npm run commit  # Use interactive commits
+   ```
 
-The setup creates a simple `.env.local` file:
+### For Deployment
 
-```bash
-# Application
-NODE_ENV=development
-NEXT_TELEMETRY_DISABLED=1
-PORT=3000
-```
-
-### Docker Configuration
-
-- **Dockerfile**: Multi-stage build for production
-- **docker-compose.yml**: Local development setup
-- **Health checks**: Automatic health monitoring
+- **[Deployment Guide](./deployment-guide.md)** - Complete CI/CD setup for Ubuntu servers
 
 ## 🛠️ Troubleshooting
 
-### Common Issues
+### Common Setup Issues
 
-1. **Build Failures**
-
-   ```bash
-   # Check Node.js version
-   node --version
-
-   # Clear Docker cache
-   docker system prune -a
-   ```
-
-2. **Deployment Failures**
+1. **Node.js Version**
 
    ```bash
-   # Check GitHub Actions logs
-   # Test locally first
-   ./scripts/deploy.sh develop
+   node --version  # Should be 20+
+   nvm use 20      # If using nvm
    ```
 
-3. **Health Check Failures**
+2. **Permission Issues**
 
    ```bash
-   # Check application logs
-   docker-compose logs windifi-fe
-
-   # Verify environment variables
-   docker-compose exec windifi-fe env
+   chmod +x scripts/setup-commit-tools.sh
    ```
 
-### Debug Commands
-
-```bash
-# Check Docker images
-docker images | grep windifi-fe
-
-# Test container locally
-docker run -p 3000:3000 ghcr.io/your-username/windifi-fe:develop
-
-# Check application health
-curl http://localhost:3000/api/health
-```
+3. **Port Already in Use**
+   ```bash
+   lsof -ti:3000 | xargs kill -9  # Kill process on port 3000
+   ```
 
 ## 📚 Documentation
 
-- **[CI/CD Guide](./ci-cd-guide.md)** - Pipeline documentation
-- **[Deployment Setup Guide](./deployment-setup-guide.md)** - Detailed configuration
-
-## 🆘 Support
-
-If you encounter issues:
-
-1. Check the troubleshooting section above
-2. Review the detailed documentation
-3. Check GitHub Actions logs
-4. Contact the development team
+- **[Development Guide](./development-guide.md)** - Complete development workflow
+- **[Quick Reference](./quick-reference.md)** - Essential commands and guidelines
+- **[Deployment Guide](./deployment-guide.md)** - Production deployment setup
+- **[Project Structure](./project-structure.md)** - Architecture and folder organization
+- **[Linting Guide](./linting-and-formatting.md)** - Code quality setup
 
 ---
 
-**🎉 Congratulations!** Your Next.js application is now deployed with a simple CI/CD pipeline!
+**🎉 Happy coding!** You're all set to contribute to Windifi Frontend.

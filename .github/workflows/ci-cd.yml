@@ -2,22 +2,29 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [develop]
+    branches: [develop, main]
   pull_request:
-    branches: [develop]
+    branches: [develop, main]
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  DOCKER_BUILDKIT: 1
 
 jobs:
-  test:
-    name: Test
+  # Code Quality and Testing
+  quality-gate:
+    name: Quality Gate
     runs-on: ubuntu-latest
+    outputs:
+      should-deploy: ${{ steps.deploy-check.outputs.should-deploy }}
+      environment: ${{ steps.deploy-check.outputs.environment }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -26,7 +33,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --prefer-offline --no-audit
 
       - name: Run linting
         run: npm run lint
@@ -34,21 +41,47 @@ jobs:
       - name: Run type checking
         run: npm run type-check
 
-      - name: Run tests
+      - name: Run tests with coverage
         run: npm run test:run
 
       - name: Run format check
         run: npm run format:check
 
+      - name: Security audit
+        run: npm audit --audit-level moderate
+
+      - name: Determine deployment
+        id: deploy-check
+        run: |
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+              echo "should-deploy=true" >> $GITHUB_OUTPUT
+              echo "environment=develop" >> $GITHUB_OUTPUT
+            elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+              echo "should-deploy=true" >> $GITHUB_OUTPUT
+              echo "environment=production" >> $GITHUB_OUTPUT
+            else
+              echo "should-deploy=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "should-deploy=false" >> $GITHUB_OUTPUT
+          fi
+
+  # Build and Push Docker Image
   build:
-    name: Build and Push Docker Image
-    needs: test
+    name: Build & Push Image
+    needs: quality-gate
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+    if: needs.quality-gate.outputs.should-deploy == 'true'
 
     permissions:
       contents: read
       packages: write
+      security-events: write
+
+    outputs:
+      image-digest: ${{ steps.build.outputs.digest }}
+      image-tags: ${{ steps.meta.outputs.tags }}
 
     steps:
       - name: Checkout code
@@ -56,6 +89,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            network=host
 
       - name: Log in to Container Registry
         uses: docker/login-action@v3
@@ -71,49 +107,268 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=branch
-            type=sha,prefix=develop-
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push Docker image
+        id: build
         uses: docker/build-push-action@v5
         with:
           context: .
+          platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: |
+            type=gha,scope=${{ github.ref_name }}
+            type=gha,scope=refs/heads/main
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
 
+  # Deploy to Server
   deploy:
-    name: Deploy to Develop
-    needs: build
+    name: Deploy to ${{ needs.quality-gate.outputs.environment }}
+    needs: [quality-gate, build]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
+    if: needs.quality-gate.outputs.should-deploy == 'true'
+
+    environment:
+      name: ${{ needs.quality-gate.outputs.environment }}
+      url: ${{ steps.deploy.outputs.url }}
 
     steps:
-      - name: Deploy to develop environment
+      - name: Checkout deployment scripts
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            scripts/
+          sparse-checkout-cone-mode: false
+
+      - name: Setup SSH with security hardening
+        run: |
+          # Create SSH directory with proper permissions
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          # Add SSH private key with proper permissions
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          # Configure SSH client for security
+          cat > ~/.ssh/config << EOF
+          Host deployment-server
+            HostName ${{ secrets.SERVER_HOST }}
+            User ${{ secrets.SERVER_USER }}
+            IdentityFile ~/.ssh/id_rsa
+            StrictHostKeyChecking yes
+            UserKnownHostsFile ~/.ssh/known_hosts
+            ServerAliveInterval 60
+            ServerAliveCountMax 3
+            ConnectTimeout 10
+          EOF
+          chmod 600 ~/.ssh/config
+
+          # Add server to known hosts
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Pre-deployment validation
+        run: |
+          echo "🔍 Running pre-deployment validation..."
+
+          # Test SSH connectivity
+          ssh deployment-server "echo 'SSH connection successful'"
+
+          # Check server resources
+          ssh deployment-server "
+            echo 'Server resources:'
+            df -h /
+            free -h
+            docker system df
+          "
+
+      - name: Deploy with blue-green strategy
         id: deploy
         run: |
-          echo "Deploying to develop environment..."
-          # Add your deployment commands here
-          # Examples:
-          # - docker-compose -f docker-compose.develop.yml up -d
-          # - kubectl apply -f k8s/develop/
-          # - aws ecs update-service --cluster develop --service windifi-fe --force-new-deployment
+          echo "🚀 Starting deployment to ${{ needs.quality-gate.outputs.environment }}..."
 
-          # Set deployment URL for environment
-          echo "url=https://develop.windifi.com" >> $GITHUB_OUTPUT
+          # Set environment-specific variables
+          if [[ "${{ needs.quality-gate.outputs.environment }}" == "production" ]]; then
+            APP_PORT=80
+            CONTAINER_NAME=windifi-fe-prod
+            BACKUP_NAME=windifi-fe-prod-backup
+          else
+            APP_PORT=3000
+            CONTAINER_NAME=windifi-fe-dev
+            BACKUP_NAME=windifi-fe-dev-backup
+          fi
 
-      - name: Run health check
+          # Extract image tag
+          IMAGE_TAG=$(echo "${{ needs.build.outputs.image-tags }}" | grep -E "${{ needs.quality-gate.outputs.environment }}-" | head -1)
+
+          ssh deployment-server << EOF
+            set -e
+            echo "🔄 Deploying image: \$IMAGE_TAG"
+            
+            # Create deployment directory
+            sudo mkdir -p /opt/windifi-fe
+            cd /opt/windifi-fe
+            
+            # Pull new image
+            docker pull \$IMAGE_TAG
+            
+            # Backup current container (if exists)
+            if docker ps -a --format 'table {{.Names}}' | grep -q "^\$CONTAINER_NAME\$"; then
+              echo "📦 Creating backup of current container..."
+              docker stop \$CONTAINER_NAME || true
+              docker rename \$CONTAINER_NAME \$BACKUP_NAME || true
+            fi
+            
+            # Run new container with health check
+            echo "🚀 Starting new container..."
+            docker run -d \\
+              --name \$CONTAINER_NAME \\
+              --restart unless-stopped \\
+              -p \$APP_PORT:3000 \\
+              --memory=512m \\
+              --cpus=1.0 \\
+              --log-driver json-file \\
+              --log-opt max-size=10m \\
+              --log-opt max-file=3 \\
+              -e NODE_ENV=production \\
+              -e NEXT_TELEMETRY_DISABLED=1 \\
+              -e PORT=3000 \\
+              \$IMAGE_TAG
+            
+            # Wait for container to be ready
+            echo "⏳ Waiting for container to start..."
+            sleep 10
+            
+            # Verify container is running
+            if ! docker ps --format 'table {{.Names}}' | grep -q "^\$CONTAINER_NAME\$"; then
+              echo "❌ Container failed to start"
+              docker logs \$CONTAINER_NAME
+              exit 1
+            fi
+            
+            echo "✅ Container started successfully"
+          EOF
+
+          # Set output URL
+          if [[ "${{ needs.quality-gate.outputs.environment }}" == "production" ]]; then
+            echo "url=http://${{ secrets.SERVER_HOST }}" >> $GITHUB_OUTPUT
+          else
+            echo "url=http://${{ secrets.SERVER_HOST }}:3000" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Health check and validation
         run: |
-          echo "Running health check..."
-          # Add health check here
-          # curl -f https://develop.windifi.com/api/health
+          echo "🏥 Running comprehensive health checks..."
 
-      - name: Notify deployment status
+          # Determine URL based on environment
+          if [[ "${{ needs.quality-gate.outputs.environment }}" == "production" ]]; then
+            HEALTH_URL="http://${{ secrets.SERVER_HOST }}/api/health"
+          else
+            HEALTH_URL="http://${{ secrets.SERVER_HOST }}:3000/api/health"
+          fi
+
+          # Wait for application to be ready
+          echo "⏳ Waiting for application to be ready..."
+          for i in {1..12}; do
+            if curl -f -s "$HEALTH_URL" >/dev/null 2>&1; then
+              echo "✅ Health check passed on attempt $i"
+              break
+            fi
+            if [ $i -eq 12 ]; then
+              echo "❌ Health check failed after 12 attempts"
+              # Get container logs for debugging
+              ssh deployment-server "docker logs windifi-fe-${{ needs.quality-gate.outputs.environment == 'production' && 'prod' || 'dev' }}"
+              exit 1
+            fi
+            echo "⏳ Health check attempt $i failed, retrying in 10s..."
+            sleep 10
+          done
+
+          # Detailed health validation
+          echo "🔍 Running detailed health validation..."
+          HEALTH_RESPONSE=$(curl -s "$HEALTH_URL")
+          echo "Health response: $HEALTH_RESPONSE"
+
+          # Validate response contains expected fields
+          if echo "$HEALTH_RESPONSE" | grep -q '"status":"healthy"'; then
+            echo "✅ Health check validation passed"
+          else
+            echo "❌ Health check validation failed"
+            exit 1
+          fi
+
+      - name: Post-deployment cleanup
+        if: success()
+        run: |
+          echo "🧹 Running post-deployment cleanup..."
+
+          ssh deployment-server << 'EOF'
+            # Remove backup container if deployment was successful
+            if [[ "${{ needs.quality-gate.outputs.environment }}" == "production" ]]; then
+              BACKUP_NAME=windifi-fe-prod-backup
+            else
+              BACKUP_NAME=windifi-fe-dev-backup
+            fi
+            
+            docker rm $BACKUP_NAME 2>/dev/null || true
+            
+            # Clean up old images (keep last 3)
+            docker images --format "table {{.Repository}}:{{.Tag}}\t{{.CreatedAt}}" | \
+              grep "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}" | \
+              tail -n +4 | \
+              awk '{print $1}' | \
+              xargs -r docker rmi || true
+            
+            # Clean up dangling images
+            docker image prune -f
+            
+            echo "✅ Cleanup completed"
+          EOF
+
+      - name: Rollback on failure
+        if: failure()
+        run: |
+          echo "🔄 Rolling back due to deployment failure..."
+
+          ssh deployment-server << 'EOF'
+            set -e
+            
+            if [[ "${{ needs.quality-gate.outputs.environment }}" == "production" ]]; then
+              CONTAINER_NAME=windifi-fe-prod
+              BACKUP_NAME=windifi-fe-prod-backup
+            else
+              CONTAINER_NAME=windifi-fe-dev
+              BACKUP_NAME=windifi-fe-dev-backup
+            fi
+            
+            # Stop failed container
+            docker stop $CONTAINER_NAME || true
+            docker rm $CONTAINER_NAME || true
+            
+            # Restore backup if it exists
+            if docker ps -a --format 'table {{.Names}}' | grep -q "^$BACKUP_NAME$"; then
+              echo "📦 Restoring backup container..."
+              docker rename $BACKUP_NAME $CONTAINER_NAME
+              docker start $CONTAINER_NAME
+              echo "✅ Rollback completed"
+            else
+              echo "⚠️  No backup container found"
+            fi
+          EOF
+
+      - name: Deployment summary
         if: always()
         run: |
           if [ "${{ job.status }}" == "success" ]; then
-            echo "✅ Develop deployment successful"
+            echo "✅ Deployment to ${{ needs.quality-gate.outputs.environment }} successful!"
+            echo "🌐 Application available at: ${{ steps.deploy.outputs.url }}"
+            echo "📊 Health endpoint: ${{ steps.deploy.outputs.url }}/api/health"
           else
-            echo "❌ Develop deployment failed"
+            echo "❌ Deployment to ${{ needs.quality-gate.outputs.environment }} failed!"
+            echo "🔄 Rollback has been attempted"
           fi

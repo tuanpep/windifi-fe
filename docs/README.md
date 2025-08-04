@@ -1,82 +1,86 @@
 # Windifi Frontend Documentation
 
-Welcome to the Windifi Frontend project documentation. This directory contains all the documentation needed to understand and contribute to the project.
+Welcome to the Windifi Frontend project documentation. This directory contains all the documentation needed to understand, develop, and deploy the project.
 
-## 📚 Documentation Index
+## 🚀 Getting Started
 
-### Development Workflow
-
-- **[Development Guide](./development-guide.md)** - Complete workflow and commit conventions
+- **[Quick Start Guide](./QUICK_START.md)** - Get up and running in 2 minutes
+- **[Development Guide](./development-guide.md)** - Complete development workflow
 - **[Quick Reference](./quick-reference.md)** - Essential commands and guidelines
 
-### Project Structure
+## 🏗️ Architecture & Structure
 
-- **[Architecture Overview](./architecture.md)** - Project architecture and design decisions _(Coming Soon)_
-- **[Component Guidelines](./components.md)** - Component development standards _(Coming Soon)_
-- **[API Integration](./api.md)** - Backend API integration patterns _(Coming Soon)_
+- **[Project Structure](./project-structure.md)** - Feature-based architecture and folder organization
+- **[Linting & Formatting](./linting-and-formatting.md)** - Code quality tools and configuration
 
-### Development Guidelines
+## 🚀 Deployment & Operations
 
-- **[Code Style Guide](./code-style.md)** - Coding standards and conventions _(Coming Soon)_
-- **[Testing Strategy](./testing.md)** - Testing approach and best practices _(Coming Soon)_
-- **[Performance Guidelines](./performance.md)** - Performance optimization tips _(Coming Soon)_
+- **[Deployment Guide](./deployment-guide.md)** - Complete CI/CD setup for Ubuntu servers with Docker
 
-### Deployment & Operations
+## ⚡ Quick Setup
 
-- **[Deployment Guide](./deployment.md)** - How to deploy the application _(Coming Soon)_
-- **[Environment Configuration](./environments.md)** - Environment setup and configuration _(Coming Soon)_
-- **[Monitoring & Logging](./monitoring.md)** - Application monitoring and logging _(Coming Soon)_
+```bash
+# Clone and setup
+git clone <repository-url>
+cd windifi-fe
+npm install
+./scripts/setup-commit-tools.sh
 
-## 🚀 Quick Start
+# Start development
+npm run dev
+```
 
-1. **Setup Development Environment**
+## 📋 Documentation Overview
 
-   ```bash
-   git clone <repository-url>
-   cd windifi-fe
-   npm install
-   ./scripts/setup-commit-tools.sh
-   npm run dev
-   ```
+| Guide                                               | Purpose                        | Audience                   |
+| --------------------------------------------------- | ------------------------------ | -------------------------- |
+| [Quick Start](./QUICK_START.md)                     | Get started in 2 minutes       | New developers             |
+| [Development Guide](./development-guide.md)         | Complete development workflow  | All developers             |
+| [Quick Reference](./quick-reference.md)             | Daily commands and conventions | All developers             |
+| [Project Structure](./project-structure.md)         | Architecture and organization  | New developers, architects |
+| [Linting & Formatting](./linting-and-formatting.md) | Code quality setup             | All developers             |
+| [Deployment Guide](./deployment-guide.md)           | Production deployment          | DevOps, senior developers  |
 
-2. **Follow Development Workflow**
-   - Read [Quick Reference](./quick-reference.md) for daily commands
-   - Refer to [Development Guide](./development-guide.md) for complete guidelines
+## 🎯 Choose Your Path
 
-3. **Start Contributing**
-   - Create feature branches from `develop`
-   - Use `npm run commit` for interactive commits
-   - Follow conventional commit messages
-   - Submit pull requests for review
+### 👶 **New to the Project?**
 
-## 📋 Documentation Standards
+Start with [Quick Start Guide](./QUICK_START.md) → [Development Guide](./development-guide.md)
 
-When adding new documentation:
+### 🏃 **Need Quick Commands?**
 
-- Use clear, concise language
-- Include practical examples
-- Keep information up to date
-- Follow the established markdown format
-- Add links to related documentation
+Go to [Quick Reference](./quick-reference.md)
+
+### 🏗️ **Understanding Architecture?**
+
+Read [Project Structure](./project-structure.md)
+
+### 🚀 **Deploying to Production?**
+
+Follow [Deployment Guide](./deployment-guide.md)
 
 ## 🤝 Contributing to Documentation
 
-To improve this documentation:
-
-1. Create a feature branch: `git checkout -b docs/improve-git-flow`
-2. Make your changes
-3. Commit with conventional format: `git commit -m "docs: improve git flow examples"`
-4. Submit a pull request
+1. Create feature branch: `git checkout -b docs/improve-something`
+2. Make changes following the existing style
+3. Use conventional commits: `git commit -m "docs: improve setup guide"`
+4. Submit pull request
 
 ## 📞 Support
 
-If you have questions about the documentation or need clarification:
+**For Development Questions:**
 
-- Check the [Quick Reference](./quick-reference.md) first
-- Review the [Development Guide](./development-guide.md) for detailed information
-- Create an issue in the repository for documentation improvements
+- Check [Quick Reference](./quick-reference.md) first
+- Review [Development Guide](./development-guide.md)
+- Create an issue for missing documentation
+
+**For Deployment Issues:**
+
+- Follow [Deployment Guide](./deployment-guide.md) troubleshooting
+- Check server logs and GitHub Actions
+- Create an issue with error details
 
 ---
 
-**Last Updated**: January 2024  
-**Version**: 1.0.0
+**Last Updated**: January 2025  
+**Maintained by**: Windifi Development Team
