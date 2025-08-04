@@ -92,10 +92,6 @@ npm run commit          # Interactive commit (recommended)
    npm run commit  # Use interactive commits
    ```
 
-### For Deployment
-
-- **[Deployment Guide](./deployment-guide.md)** - Complete CI/CD setup for Ubuntu servers
-
 ## 🛠️ Troubleshooting
 
 ### Common Setup Issues
@@ -122,7 +118,6 @@ npm run commit          # Interactive commit (recommended)
 
 - **[Development Guide](./development-guide.md)** - Complete development workflow
 - **[Quick Reference](./quick-reference.md)** - Essential commands and guidelines
-- **[Deployment Guide](./deployment-guide.md)** - Production deployment setup
 - **[Project Structure](./project-structure.md)** - Architecture and folder organization
 - **[Linting Guide](./linting-and-formatting.md)** - Code quality setup
 

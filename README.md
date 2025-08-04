@@ -65,47 +65,7 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deployment
-
-This project includes a simple CI/CD pipeline using GitHub Actions and Docker.
-
-### Quick Setup
-
-```bash
-# Run the automated setup script
-./scripts/setup-deployment.sh
-
-# This will:
-# - Install dependencies
-# - Create environment file
-# - Configure Git hooks
-```
-
-### Quick Deployment
-
-```bash
-# Local deployment with Docker
-./scripts/deploy.sh develop
-
-# Or use Docker Compose directly
-docker-compose up --build -d
-```
-
-### CI/CD Pipeline
-
-The project uses GitHub Actions for automated testing, building, and deployment:
-
-- **Test Stage**: Linting, type checking, and unit tests
-- **Build Stage**: Docker image creation and registry push
-- **Deploy Stage**: Automatic deployment to develop environment
-
-**Documentation**: [Quick Start Guide](./docs/QUICK_START.md)
-
-### Deployment Environment
-
-- **Develop**: Automatically deploys from `develop` branch
-
-### Health Checks
+## Health Checks
 
 - Application: `http://localhost:3000/api/health`
 

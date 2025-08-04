@@ -172,7 +172,6 @@ Development → Staging → Production
 
 - **[Development Guide](./development-guide.md)** - Complete development workflow
 - **[Project Structure](./project-structure.md)** - Architecture and folder organization
-- **[Deployment Guide](./deployment-guide.md)** - Production deployment setup
 
 ---
 

@@ -13,10 +13,6 @@ Welcome to the Windifi Frontend project documentation. This directory contains a
 - **[Project Structure](./project-structure.md)** - Feature-based architecture and folder organization
 - **[Linting & Formatting](./linting-and-formatting.md)** - Code quality tools and configuration
 
-## 🚀 Deployment & Operations
-
-- **[Deployment Guide](./deployment-guide.md)** - Complete CI/CD setup for Ubuntu servers with Docker
-
 ## ⚡ Quick Setup
 
 ```bash
@@ -39,7 +35,6 @@ npm run dev
 | [Quick Reference](./quick-reference.md)             | Daily commands and conventions | All developers             |
 | [Project Structure](./project-structure.md)         | Architecture and organization  | New developers, architects |
 | [Linting & Formatting](./linting-and-formatting.md) | Code quality setup             | All developers             |
-| [Deployment Guide](./deployment-guide.md)           | Production deployment          | DevOps, senior developers  |
 
 ## 🎯 Choose Your Path
 
@@ -55,10 +50,6 @@ Go to [Quick Reference](./quick-reference.md)
 
 Read [Project Structure](./project-structure.md)
 
-### 🚀 **Deploying to Production?**
-
-Follow [Deployment Guide](./deployment-guide.md)
-
 ## 🤝 Contributing to Documentation
 
 1. Create feature branch: `git checkout -b docs/improve-something`
@@ -73,12 +64,6 @@ Follow [Deployment Guide](./deployment-guide.md)
 - Check [Quick Reference](./quick-reference.md) first
 - Review [Development Guide](./development-guide.md)
 - Create an issue for missing documentation
-
-**For Deployment Issues:**
-
-- Follow [Deployment Guide](./deployment-guide.md) troubleshooting
-- Check server logs and GitHub Actions
-- Create an issue with error details
 
 ---
 
