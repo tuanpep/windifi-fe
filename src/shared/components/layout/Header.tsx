@@ -1,7 +1,6 @@
 'use client';
 
 import { Badge, Box, Flex, HStack, Text } from '@chakra-ui/react';
-import { ConnectWalletButton } from '../../../features/connect-wallet/components/ConnectWalletButton';
 import { ConnectWalletDialog } from '../../../features/connect-wallet/components/ConnectWalletDialog';
 
 export function Header() {
@@ -42,7 +41,6 @@ export function Header() {
             Beta
           </Badge>
         </HStack>
-        <ConnectWalletButton />
       </Flex>
       <ConnectWalletDialog />
     </Box>
