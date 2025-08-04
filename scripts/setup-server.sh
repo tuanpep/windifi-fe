@@ -29,7 +29,7 @@ print_header() {
 
 # Server configuration - Use environment variables for flexibility
 SERVER_IP="${SERVER_IP:-72.18.214.233}"
-SERVER_USER="${SERVER_USER:-root}"
+SERVER_USER="${SERVER_USER:-admin}"
 DEPLOYMENT_USER="${DEPLOYMENT_USER:-windifi}"
 
 print_header "Setting up server at $SERVER_IP for Windifi Frontend deployment..."
@@ -39,6 +39,26 @@ if [[ -z "$SERVER_IP" || -z "$SERVER_USER" ]]; then
     print_error "SERVER_IP and SERVER_USER must be set"
     exit 1
 fi
+
+# Function to add server to known_hosts
+add_server_to_known_hosts() {
+    print_status "Adding server to known_hosts..."
+    ssh-keyscan -H "$SERVER_IP" >> ~/.ssh/known_hosts 2>/dev/null || true
+}
+
+# Add server to known_hosts before proceeding
+add_server_to_known_hosts
+
+# Test server connection
+print_status "Testing connection to server..."
+if ! run_on_server "echo 'Connection test successful'" >/dev/null 2>&1; then
+    print_error "Failed to connect to server. Please check:"
+    print_error "1. Server IP address: $SERVER_IP"
+    print_error "2. SSH key is properly configured"
+    print_error "3. Server is accessible from this machine"
+    exit 1
+fi
+print_status "Server connection successful!"
 
 # Function to run command on server with timeout
 run_on_server() {

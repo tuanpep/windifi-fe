@@ -29,7 +29,7 @@ print_header() {
 
 # Server configuration
 SERVER_IP="72.18.214.233"
-SERVER_USER="root"
+SERVER_USER="admin"
 
 print_header "SSH Key and GitHub Secrets Setup for Windifi Frontend"
 
