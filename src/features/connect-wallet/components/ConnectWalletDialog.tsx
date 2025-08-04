@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Dialog } from '@chakra-ui/react';
+import { Dialog } from '@chakra-ui/react';
 import { RiCloseLine } from 'react-icons/ri';
 import { useConnectWalletStore } from '../store/connect-wallet-store';
 
