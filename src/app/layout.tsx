@@ -16,8 +16,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Windifi - Cryptocurrency Management Platform',
-  description: 'Your cryptocurrency management platform',
+  title: 'Windifi - Next-Generation DeFi Swap Platform',
+  description:
+    'Experience lightning-fast token swaps with the lowest fees and best rates across multiple blockchains. Powered by wind-speed technology for seamless DeFi trading.',
+  keywords: 'DeFi, swap, cryptocurrency, blockchain, tokens, trading, windifi',
+  authors: [{ name: 'Windifi Team' }],
+  openGraph: {
+    title: 'Windifi - Next-Generation DeFi Swap Platform',
+    description:
+      'Lightning-fast token swaps with the lowest fees and best rates',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
