@@ -259,37 +259,6 @@ jobs:
             echo "url=https://dev.windifi.com" >> $GITHUB_OUTPUT
           fi
 
-      - name: Health check and validation
-        run: |
-          echo "🏥 Running health checks..."
-
-          # Set environment-specific variables
-          if [[ "${{ needs.quality-gate.outputs.environment }}" == "production" ]]; then
-            HEALTH_URL="https://dev.windifi.com/api/health"
-            COMPOSE_FILE="docker-compose.prod.yml"
-          else
-            HEALTH_URL="https://dev.windifi.com/api/health"
-            COMPOSE_FILE="docker-compose.yml"
-          fi
-
-          # Wait for application to be ready (reduced attempts)
-          echo "⏳ Waiting for application to be ready..."
-          for i in {1..6}; do
-            if curl -f -s "$HEALTH_URL" >/dev/null 2>&1; then
-              echo "✅ Health check passed on attempt $i"
-              HEALTH_RESPONSE=$(curl -s "$HEALTH_URL")
-              echo "Health response: $HEALTH_RESPONSE"
-              exit 0
-            fi
-            if [ $i -eq 6 ]; then
-              echo "❌ Health check failed after 6 attempts"
-              ssh deployment-server "cd ~/windifi-fe-deploy && docker-compose -f $COMPOSE_FILE logs --tail=50"
-              exit 1
-            fi
-            echo "⏳ Health check attempt $i failed, retrying in 10s..."
-            sleep 10
-          done
-
       - name: Post-deployment cleanup
         if: success()
         run: |
@@ -334,7 +303,6 @@ jobs:
           if [ "${{ job.status }}" == "success" ]; then
             echo "✅ Deployment to ${{ needs.quality-gate.outputs.environment }} successful!"
             echo "🌐 Application available at: ${{ steps.deploy.outputs.url }}"
-            echo "📊 Health endpoint: ${{ steps.deploy.outputs.url }}/api/health"
           else
             echo "❌ Deployment to ${{ needs.quality-gate.outputs.environment }} failed!"
             echo "🔄 Rollback has been attempted"

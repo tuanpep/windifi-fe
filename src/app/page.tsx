@@ -144,7 +144,7 @@ export default function Home() {
                 className="wind-text"
                 fontSize={{ base: '4xl', md: '6xl', lg: '7xl' }}
               >
-                Swap Tokens with
+                Swap Tokens with&nbsp;
                 <Text
                   as="span"
                   bg="gradient.wind"
@@ -163,7 +163,7 @@ export default function Home() {
                     animation: `${shimmer} 3s ease-in-out infinite`,
                   }}
                 >
-                  &quot; Wind Speed
+                  Wind Speed
                 </Text>
               </Heading>
 
