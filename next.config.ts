@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['@chakra-ui/react'],
   },
 
+  devIndicators: false,
+
   // Image optimization
   images: {
     formats: ['image/webp', 'image/avif'],

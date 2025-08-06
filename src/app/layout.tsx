@@ -41,7 +41,7 @@ export default function RootLayout({
         style={{ overflow: 'hidden' }}
       >
         <RootProvider>
-          <Flex direction="row" h="100vh" bg="bg.subtle" overflow="hidden">
+          <Flex direction="row" h="100vh" bg="bg.default" overflow="hidden">
             {/* Navbar - Fixed width 210px */}
             <Box
               as="nav"
@@ -64,7 +64,7 @@ export default function RootLayout({
               h="100vh"
               overflowY="auto"
               overflowX="hidden"
-              bg="bg.subtle"
+              bg="bg.default"
             >
               <MainHeader />
               {children}
