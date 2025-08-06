@@ -77,7 +77,6 @@ The pipeline will create and use:
 
 - Removed `driver-opts: network=host` from Docker Buildx (not needed)
 - Simplified checkout to only fetch required compose files
-- Reduced health check attempts from 12 to 6
 - Streamlined cleanup process
 
 ### 2. Improved Error Handling
@@ -153,22 +152,18 @@ APP_PORT="80" \
    docker-compose ps
    ```
 
-3. **Health Check Failures**
+3. **Container Fails to Start**
 
    ```bash
-   # Test health endpoint manually
-   curl -f http://localhost:3000/api/health
-
    # Check if port is accessible
    netstat -tlnp | grep :3000
    ```
 
 ### Monitoring
 
-The pipeline includes health checks that verify:
+The pipeline verifies:
 
 - Container starts successfully
-- Health endpoint responds correctly
 - Application is accessible on the configured port
 
 Logs are automatically captured and displayed if deployment fails.

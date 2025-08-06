@@ -27,18 +27,6 @@ services:
       - PORT=3000
       - HOSTNAME=0.0.0.0
 
-    # Health check configuration
-    healthcheck:
-      test:
-        [
-          'CMD-SHELL',
-          'wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1',
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-
     # Logging configuration
     logging:
       driver: 'json-file'
@@ -77,19 +65,9 @@ services:
       - ./ssl:/etc/nginx/ssl:ro
       - nginx_logs:/var/log/nginx
     depends_on:
-      windifi-fe:
-        condition: service_healthy
+      - windifi-fe
     networks:
       - windifi-network
-    healthcheck:
-      test:
-        [
-          'CMD-SHELL',
-          'wget --no-verbose --tries=1 --spider http://localhost/api/health || exit 1',
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
 networks:
   windifi-network:

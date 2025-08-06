@@ -82,7 +82,6 @@ SSH_PRIVATE_KEY=<content-of-private-key>
 ### 🎯 Application URLs
 
 - **Development**: https://dev.windifi.com
-- **Health Check**: https://dev.windifi.com/api/health
 
 ### 📚 Additional Documentation
 
@@ -109,7 +108,6 @@ IMAGE_TAG="your-image:tag" ./deploy.sh
 - Gzip compression enabled
 - Static file caching (1 year)
 - Container resource limits
-- Health check monitoring
 - Automatic image cleanup
 
 ### 🔐 Security Features
