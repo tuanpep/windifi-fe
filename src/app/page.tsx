@@ -101,7 +101,7 @@ export default function Home() {
         animation={`${float} 12s ease-in-out infinite 1s`}
       />
 
-      <Container maxW="7xl" position="relative" zIndex="1">
+      <Container maxW="9xl" position="relative" zIndex="1">
         {/* Hero Section - Enhanced */}
         <VStack gap={16} py={24} textAlign="center">
           <VStack gap={8} maxW="5xl">
