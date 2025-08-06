@@ -1,0 +1,101 @@
+# Testing Guidelines
+
+## Testing Stack
+
+- **Framework**: Vitest
+- **Testing Library**: React Testing Library
+- **DOM Environment**: jsdom
+- **Coverage**: Built-in coverage reporting
+
+## Test File Organization
+
+- Place test files next to the code they test
+- Use `.test.ts` or `.test.tsx` extension
+- Group related tests using `describe` blocks
+- Use descriptive test names that explain the behavior
+
+## Component Testing
+
+```typescript
+import { render, screen } from '@testing-library/react';
+import { ComponentName } from './ComponentName';
+
+describe('ComponentName', () => {
+  it('should render correctly', () => {
+    render(<ComponentName />);
+    expect(screen.getByText('Expected Text')).toBeInTheDocument();
+  });
+
+  it('should handle user interactions', async () => {
+    const user = userEvent.setup();
+    render(<ComponentName />);
+
+    await user.click(screen.getByRole('button'));
+    // Assert expected behavior
+  });
+});
+```
+
+## Hook Testing
+
+```typescript
+import { renderHook, act } from '@testing-library/react';
+import { useCustomHook } from './useCustomHook';
+
+describe('useCustomHook', () => {
+  it('should return expected values', () => {
+    const { result } = renderHook(() => useCustomHook());
+    expect(result.current.value).toBe(expectedValue);
+  });
+});
+```
+
+## Utility Function Testing
+
+```typescript
+import { formatCurrency } from './utils';
+
+describe('formatCurrency', () => {
+  it('should format positive numbers correctly', () => {
+    expect(formatCurrency(1234.56)).toBe('$1,234.56');
+  });
+
+  it('should handle edge cases', () => {
+    expect(formatCurrency(0)).toBe('$0.00');
+    expect(formatCurrency(-100)).toBe('-$100.00');
+  });
+});
+```
+
+## Mocking Guidelines
+
+- Mock external dependencies (APIs, libraries)
+- Use `vi.mock()` for module mocking
+- Mock React Query hooks when testing components
+- Provide realistic mock data
+
+## Test Setup
+
+- Use [src/test/setup.ts](mdc:src/test/setup.ts) for global test configuration
+- Import testing utilities in test files
+- Set up providers (React Query, Chakra UI) in test utilities
+
+## Running Tests
+
+- `npm test` - Run tests in watch mode
+- `npm run test:run` - Run tests once
+- `npm run test:coverage` - Run tests with coverage report
+- `npm run test:ui` - Run tests with UI interface
+
+## Best Practices
+
+- Test user behavior, not implementation details
+- Use semantic queries (getByRole, getByLabelText)
+- Test error states and edge cases
+- Keep tests focused and isolated
+- Use meaningful assertions
+  description:
+  globs:
+  alwaysApply: false
+
+---

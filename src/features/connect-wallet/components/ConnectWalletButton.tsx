@@ -7,7 +7,7 @@ export function ConnectWalletButton() {
   return (
     <Button
       colorScheme="brand"
-      size="sm"
+      size="xs"
       onClick={() => setIsOpen(true)}
       bg="gradient.wind"
       color="white"

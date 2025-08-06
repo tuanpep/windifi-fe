@@ -1,0 +1,193 @@
+# API and Data Handling Patterns
+
+## React Query Integration
+
+This project uses TanStack Query (React Query) for server state management.
+
+### Query Setup
+
+```typescript
+// Define query keys
+export const queryKeys = {
+  user: ['user'] as const,
+  transactions: ['transactions'] as const,
+  tokenPrices: ['tokenPrices'] as const,
+};
+
+// Create custom hooks for API calls
+export function useUserData(userId: string) {
+  return useQuery({
+    queryKey: [...queryKeys.user, userId],
+    queryFn: () => fetchUserData(userId),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
+  });
+}
+```
+
+### Mutation Patterns
+
+```typescript
+export function useUpdateUser() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: updateUserData,
+    onSuccess: (data, variables) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({
+        queryKey: [...queryKeys.user, variables.userId],
+      });
+
+      // Optimistic updates
+      queryClient.setQueryData([...queryKeys.user, variables.userId], data);
+    },
+    onError: (error) => {
+      // Handle error (show toast, etc.)
+      console.error('Failed to update user:', error);
+    },
+  });
+}
+```
+
+## Zustand State Management
+
+Use Zustand for client-side state that doesn't need server persistence.
+
+### Store Pattern
+
+```typescript
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
+
+interface AppState {
+  // State properties
+  isLoading: boolean;
+  userPreferences: UserPreferences;
+
+  // Actions
+  setLoading: (loading: boolean) => void;
+  updatePreferences: (prefs: Partial<UserPreferences>) => void;
+}
+
+export const useAppStore = create<AppState>()(
+  devtools(
+    (set) => ({
+      // Initial state
+      isLoading: false,
+      userPreferences: defaultPreferences,
+
+      // Actions
+      setLoading: (loading) => set({ isLoading: loading }),
+      updatePreferences: (prefs) =>
+        set((state) => ({
+          userPreferences: { ...state.userPreferences, ...prefs },
+        })),
+    }),
+    { name: 'app-store' }
+  )
+);
+```
+
+## API Error Handling
+
+```typescript
+// Custom error types
+interface ApiError {
+  message: string;
+  code: string;
+  status: number;
+}
+
+// Error handling utility
+export function handleApiError(error: unknown): ApiError {
+  if (error instanceof Error) {
+    return {
+      message: error.message,
+      code: 'UNKNOWN_ERROR',
+      status: 500,
+    };
+  }
+
+  return {
+    message: 'An unexpected error occurred',
+    code: 'UNKNOWN_ERROR',
+    status: 500,
+  };
+}
+```
+
+## Loading States
+
+```typescript
+// Component with loading states
+export function DataComponent() {
+  const { data, isLoading, error } = useUserData(userId);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (error) {
+    return <ErrorMessage error={error} />;
+  }
+
+  return <UserDataDisplay data={data} />;
+}
+```
+
+## Form Handling
+
+Use React Hook Form with Zod validation:
+
+```typescript
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
+type FormData = z.infer<typeof formSchema>;
+
+export function LoginForm() {
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+  });
+
+  const onSubmit = (data: FormData) => {
+    // Handle form submission
+  };
+
+  return (
+    <form onSubmit={form.handleSubmit(onSubmit)}>
+      {/* Form fields */}
+    </form>
+  );
+}
+```
+
+## Data Fetching Best Practices
+
+1. **Use React Query for server state**
+2. **Use Zustand for client state**
+3. **Implement proper error boundaries**
+4. **Use optimistic updates when appropriate**
+5. **Cache data with appropriate stale times**
+6. **Handle loading and error states gracefully**
+7. **Validate data with Zod schemas**
+8. **Use TypeScript for type safety**
+
+## Example Integration
+
+Reference the connect-wallet feature for a complete example:
+
+- [src/features/connect-wallet/store/connect-wallet-store.ts](mdc:src/features/connect-wallet/store/connect-wallet-store.ts)
+- [src/features/connect-wallet/components/ConnectWalletButton.tsx](mdc:src/features/connect-wallet/components/ConnectWalletButton.tsx)
+  description:
+  globs:
+  alwaysApply: false
+
+---

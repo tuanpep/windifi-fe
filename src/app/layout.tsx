@@ -1,8 +1,8 @@
-import { Header } from '@/shared/components/layout';
 import { Box, Flex } from '@chakra-ui/react';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import RootProvider from '../providers/root-provider';
+import { MainHeader, Navbar } from '../shared/components/layout';
 import './globals.css';
 
 const geistSans = Geist({
@@ -38,11 +38,35 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={{ overflow: 'hidden' }}
       >
         <RootProvider>
-          <Flex direction="column" minH="100vh" bg="bg.subtle">
-            <Header />
-            <Box as="main" flex="1" bg="bg.subtle">
+          <Flex direction="row" h="100vh" bg="bg.subtle" overflow="hidden">
+            {/* Navbar - Fixed width 210px */}
+            <Box
+              as="nav"
+              w="210px"
+              h="100vh"
+              bg="bg.subtle"
+              borderRight="1px"
+              borderColor="border.subtle"
+              overflowY="auto"
+              overflowX="hidden"
+              flexShrink={0}
+            >
+              <Navbar />
+            </Box>
+
+            {/* Main content - Fills remaining space */}
+            <Box
+              as="main"
+              flex="1"
+              h="100vh"
+              overflowY="auto"
+              overflowX="hidden"
+              bg="bg.subtle"
+            >
+              <MainHeader />
               {children}
             </Box>
           </Flex>

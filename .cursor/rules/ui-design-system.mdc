@@ -1,0 +1,129 @@
+# UI Design System Guidelines
+
+## Chakra UI Usage
+
+This project uses Chakra UI v3 as the primary UI library. Follow these guidelines for consistent design.
+
+## Component Usage Patterns
+
+```typescript
+// Use Chakra UI components for all UI elements
+import { Button, Box, Text, Flex } from '@chakra-ui/react';
+
+// Prefer semantic props over custom styles
+<Button colorScheme="brand" size="md" variant="solid">
+  Action Button
+</Button>
+
+// Use responsive props for mobile-first design
+<Box p={{ base: 4, md: 6, lg: 8 }}>
+  Content
+</Box>
+```
+
+## Color System
+
+Use semantic color tokens from the theme:
+
+- `brand.*` - Primary brand colors
+- `gray.*` - Neutral colors
+- `red.*`, `green.*`, `yellow.*` - Status colors
+- `gradient.wind` - Brand gradient
+- `gradient.primary` - Primary gradient
+
+## Typography
+
+- Use semantic text components: `Text`, `Heading`, `Link`
+- Follow the font hierarchy: Geist Sans for body, Geist Mono for code
+- Use responsive font sizes when appropriate
+
+## Layout Components
+
+- `Flex` - For flexbox layouts
+- `Grid` - For grid layouts
+- `Box` - For basic containers
+- `Container` - For content width constraints
+- `Stack` - For vertical/horizontal spacing
+
+## Spacing System
+
+Use Chakra's spacing scale:
+
+- `1` = 0.25rem (4px)
+- `2` = 0.5rem (8px)
+- `4` = 1rem (16px)
+- `6` = 1.5rem (24px)
+- `8` = 2rem (32px)
+
+## Responsive Design
+
+```typescript
+// Mobile-first responsive design
+<Box
+  width={{ base: "100%", md: "50%", lg: "33.333%" }}
+  fontSize={{ base: "sm", md: "md", lg: "lg" }}
+  p={{ base: 2, md: 4, lg: 6 }}
+>
+  Responsive content
+</Box>
+```
+
+## Form Components
+
+- Use `FormControl`, `FormLabel`, `FormErrorMessage`
+- Implement proper accessibility with `aria-*` attributes
+- Use React Hook Form with Chakra UI components
+
+## Accessibility
+
+- Use semantic HTML elements
+- Implement proper ARIA labels
+- Ensure keyboard navigation
+- Maintain color contrast ratios
+- Use `jsx-a11y` ESLint rules
+
+## Custom Components
+
+When creating custom components:
+
+1. Extend Chakra UI components
+2. Use theme tokens for consistency
+3. Implement proper TypeScript interfaces
+4. Add accessibility attributes
+5. Include proper documentation
+
+## Example Component
+
+```typescript
+interface CustomButtonProps {
+  children: React.ReactNode;
+  onClick?: () => void;
+  variant?: 'primary' | 'secondary';
+}
+
+export function CustomButton({
+  children,
+  onClick,
+  variant = 'primary'
+}: CustomButtonProps) {
+  return (
+    <Button
+      colorScheme="brand"
+      variant={variant}
+      onClick={onClick}
+      _hover={{
+        bg: 'gradient.primary',
+        boxShadow: 'glow.wind',
+      }}
+    >
+      {children}
+    </Button>
+  );
+}
+```
+
+description:
+globs:
+alwaysApply: false
+
+---

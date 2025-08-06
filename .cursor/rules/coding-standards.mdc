@@ -1,0 +1,64 @@
+# Coding Standards for Windifi Frontend
+
+## TypeScript Guidelines
+
+- Use strict TypeScript mode - all files must be properly typed
+- Prefer `interface` over `type` for object shapes
+- Use `const` assertions for immutable data
+- Avoid `any` type - use proper typing or `unknown`
+- Use path aliases: `@/*` maps to `src/*`
+
+## React Component Standards
+
+- Use functional components with hooks
+- Implement proper prop types with TypeScript interfaces
+- Use React.memo() for performance optimization when needed
+- Follow the naming convention: PascalCase for components
+- Export components as named exports, not default exports
+
+## State Management
+
+- Use Zustand for client-side state management
+- Use React Query for server state and API calls
+- Keep state as close to where it's used as possible
+- Use custom hooks to encapsulate state logic
+
+## Chakra UI Usage
+
+- Use Chakra UI components for consistent design
+- Follow the design system tokens and theme
+- Use semantic color tokens (e.g., `brand.500`, `gray.100`)
+- Implement responsive design with Chakra's responsive props
+
+## File Organization
+
+- Group related files in feature folders
+- Use index files for clean imports
+- Keep components small and focused
+- Separate business logic from UI components
+
+## Import/Export Conventions
+
+- Use absolute imports with `@/` prefix
+- Group imports: React, third-party, internal, relative
+- Use named exports for better tree-shaking
+- Avoid barrel exports for large modules
+
+## Error Handling
+
+- Use proper error boundaries
+- Implement loading states for async operations
+- Handle edge cases gracefully
+- Use proper TypeScript error types
+
+## Performance
+
+- Use React.memo() for expensive components
+- Implement proper key props for lists
+- Use useCallback and useMemo when appropriate
+- Lazy load components when possible
+  description:
+  globs:
+  alwaysApply: false
+
+---

@@ -1,0 +1,97 @@
+# Development Workflow
+
+## Available Scripts
+
+From [package.json](mdc:package.json):
+
+### Development
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+
+### Code Quality
+
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Fix ESLint issues automatically
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check code formatting
+- `npm run type-check` - Run TypeScript type checking
+
+### Testing
+
+- `npm test` - Run tests in watch mode
+- `npm run test:run` - Run tests once
+- `npm run test:coverage` - Run tests with coverage
+- `npm run test:ui` - Run tests with UI interface
+
+### Git Workflow
+
+- `npm run commit` - Interactive commit with commitizen
+- Pre-commit hooks run automatically via Husky
+
+## Code Quality Tools
+
+### ESLint Configuration
+
+- Configuration: [eslint.config.mjs](mdc:eslint.config.mjs)
+- Extends Next.js and TypeScript rules
+- Includes accessibility (jsx-a11y) rules
+- Custom rules for React and TypeScript best practices
+
+### Prettier Configuration
+
+- Automatic import organization
+- Consistent code formatting
+- Runs on staged files via lint-staged
+
+### TypeScript Configuration
+
+- Strict mode enabled
+- Path aliases: `@/*` → `src/*`
+- Configuration: [tsconfig.json](mdc:tsconfig.json)
+
+## Pre-commit Hooks
+
+- Automatic formatting with Prettier
+- ESLint fixes on staged files
+- Conventional commit enforcement
+
+## Development Best Practices
+
+1. **Before committing**:
+   - Run `npm run lint:fix`
+   - Run `npm run format`
+   - Run `npm run type-check`
+   - Run `npm run test:run`
+
+2. **Code Review Checklist**:
+   - TypeScript types are correct
+   - ESLint passes without warnings
+   - Tests pass
+   - Code follows project conventions
+   - Accessibility considerations
+
+3. **Feature Development**:
+   - Create feature branch from main
+   - Follow feature-based architecture
+   - Write tests for new functionality
+   - Update documentation if needed
+
+## Environment Setup
+
+- Node.js 18+ required
+- Install dependencies: `npm install`
+- Set up Git hooks: `npm run prepare`
+- Configure IDE for TypeScript and ESLint
+
+## Troubleshooting
+
+- Clear Next.js cache: `rm -rf .next`
+- Clear node_modules: `rm -rf node_modules && npm install`
+- Reset TypeScript cache: `rm -rf .tsbuildinfo`
+  description:
+  globs:
+  alwaysApply: false
+
+---

@@ -51,7 +51,7 @@ export function Header() {
           <HStack gap={3} flexShrink={0}>
             <HStack align="center" gap={2}>
               <Text
-                fontSize="xl"
+                fontSize="2xl"
                 fontWeight="bold"
                 color="brand.500"
                 letterSpacing="tight"
