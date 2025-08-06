@@ -20,7 +20,7 @@ import {
   LuExternalLink,
   LuGlobe,
   LuMenu,
-  LuX
+  LuX,
 } from 'react-icons/lu';
 
 const externalLinks = [
