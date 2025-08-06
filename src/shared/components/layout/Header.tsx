@@ -20,8 +20,7 @@ import {
   LuExternalLink,
   LuGlobe,
   LuMenu,
-  LuWind,
-  LuX,
+  LuX
 } from 'react-icons/lu';
 
 const externalLinks = [
@@ -46,12 +45,11 @@ export function Header() {
       zIndex="sticky"
       boxShadow="sm"
     >
-      <Container maxW="7xl">
-        <HStack justify="space-between" align="center" py={4}>
+      <Container maxW="9xl">
+        <HStack justify="space-between" align="center" py={2}>
           {/* Logo and Brand */}
           <HStack gap={3} flexShrink={0}>
-            <Icon as={LuWind} boxSize={8} color="brand.400" />
-            <VStack align="start" gap={0}>
+            <HStack align="center" gap={2}>
               <Text
                 fontSize="xl"
                 fontWeight="bold"
@@ -78,7 +76,7 @@ export function Header() {
               >
                 Beta
               </Badge>
-            </VStack>
+            </HStack>
           </HStack>
 
           {/* Right Side Actions */}
