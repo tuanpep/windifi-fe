@@ -4,135 +4,150 @@ const config = defineConfig({
   theme: {
     tokens: {
       colors: {
-        // Enhanced brand colors with better gradients
+        // Wind-inspired brand colors with sky blues and airy tones
         brand: {
-          '50': { value: '#fefce8' },
-          '100': { value: '#fef9c3' },
-          '200': { value: '#fef08a' },
-          '300': { value: '#fde047' },
-          '400': { value: '#facc15' },
-          '500': { value: '#eab308' }, // Primary brand color
-          '600': { value: '#ca8a04' },
-          '700': { value: '#a16207' },
-          '800': { value: '#854d0e' },
-          '900': { value: '#713f12' },
-          '950': { value: '#422006' },
+          '50': { value: '#f0f9ff' }, // Lightest sky blue
+          '100': { value: '#e0f2fe' }, // Very light sky blue
+          '200': { value: '#bae6fd' }, // Light sky blue
+          '300': { value: '#7dd3fc' }, // Medium sky blue
+          '400': { value: '#38bdf8' }, // Sky blue
+          '500': { value: '#0ea5e9' }, // Primary wind blue
+          '600': { value: '#0284c7' }, // Deep sky blue
+          '700': { value: '#0369a1' }, // Darker sky blue
+          '800': { value: '#075985' }, // Deep blue
+          '900': { value: '#0c4a6e' }, // Dark blue
+          '950': { value: '#082f49' }, // Darkest blue
         },
-        // Enhanced accent colors for DeFi
+        // Wind accent colors with cyan and teal tones
         accent: {
-          '50': { value: '#f0f9ff' },
-          '100': { value: '#e0f2fe' },
-          '200': { value: '#bae6fd' },
-          '300': { value: '#7dd3fc' },
-          '400': { value: '#38bdf8' },
-          '500': { value: '#0ea5e9' },
-          '600': { value: '#0284c7' },
-          '700': { value: '#0369a1' },
-          '800': { value: '#075985' },
-          '900': { value: '#0c4a6e' },
-          '950': { value: '#082f49' },
+          '50': { value: '#ecfeff' }, // Lightest cyan
+          '100': { value: '#cffafe' }, // Very light cyan
+          '200': { value: '#a5f3fc' }, // Light cyan
+          '300': { value: '#67e8f9' }, // Medium cyan
+          '400': { value: '#22d3ee' }, // Cyan
+          '500': { value: '#06b6d4' }, // Primary cyan
+          '600': { value: '#0891b2' }, // Deep cyan
+          '700': { value: '#0e7490' }, // Darker cyan
+          '800': { value: '#155e75' }, // Deep teal
+          '900': { value: '#164e63' }, // Dark teal
+          '950': { value: '#083344' }, // Darkest teal
         },
-        // Success colors for positive actions
+        // Success colors with wind-inspired green tones
         success: {
-          '50': { value: '#f0fdf4' },
-          '100': { value: '#dcfce7' },
-          '200': { value: '#bbf7d0' },
-          '300': { value: '#86efac' },
-          '400': { value: '#4ade80' },
-          '500': { value: '#22c55e' },
-          '600': { value: '#16a34a' },
-          '700': { value: '#15803d' },
-          '800': { value: '#166534' },
-          '900': { value: '#14532d' },
-          '950': { value: '#052e16' },
+          '50': { value: '#f0fdfa' }, // Lightest mint
+          '100': { value: '#ccfbf1' }, // Very light mint
+          '200': { value: '#99f6e4' }, // Light mint
+          '300': { value: '#5eead4' }, // Medium mint
+          '400': { value: '#2dd4bf' }, // Mint
+          '500': { value: '#14b8a6' }, // Primary teal
+          '600': { value: '#0d9488' }, // Deep teal
+          '700': { value: '#0f766e' }, // Darker teal
+          '800': { value: '#115e59' }, // Deep green-teal
+          '900': { value: '#134e4a' }, // Dark green-teal
+          '950': { value: '#042f2e' }, // Darkest green-teal
         },
-        // Warning colors for alerts
+        // Warning colors with wind-inspired amber tones
         warning: {
-          '50': { value: '#fffbeb' },
-          '100': { value: '#fef3c7' },
-          '200': { value: '#fde68a' },
-          '300': { value: '#fcd34d' },
-          '400': { value: '#fbbf24' },
-          '500': { value: '#f59e0b' },
-          '600': { value: '#d97706' },
-          '700': { value: '#b45309' },
-          '800': { value: '#92400e' },
-          '900': { value: '#78350f' },
-          '950': { value: '#451a03' },
+          '50': { value: '#fffbeb' }, // Lightest amber
+          '100': { value: '#fef3c7' }, // Very light amber
+          '200': { value: '#fde68a' }, // Light amber
+          '300': { value: '#fcd34d' }, // Medium amber
+          '400': { value: '#fbbf24' }, // Amber
+          '500': { value: '#f59e0b' }, // Primary amber
+          '600': { value: '#d97706' }, // Deep amber
+          '700': { value: '#b45309' }, // Darker amber
+          '800': { value: '#92400e' }, // Deep orange
+          '900': { value: '#78350f' }, // Dark orange
+          '950': { value: '#451a03' }, // Darkest orange
         },
-        // Error colors for negative actions
+        // Error colors with wind-inspired red tones
         error: {
-          '50': { value: '#fef2f2' },
-          '100': { value: '#fee2e2' },
-          '200': { value: '#fecaca' },
-          '300': { value: '#fca5a5' },
-          '400': { value: '#f87171' },
-          '500': { value: '#ef4444' },
-          '600': { value: '#dc2626' },
-          '700': { value: '#b91c1c' },
-          '800': { value: '#991b1b' },
-          '900': { value: '#7f1d1d' },
-          '950': { value: '#450a0a' },
+          '50': { value: '#fef2f2' }, // Lightest red
+          '100': { value: '#fee2e2' }, // Very light red
+          '200': { value: '#fecaca' }, // Light red
+          '300': { value: '#fca5a5' }, // Medium red
+          '400': { value: '#f87171' }, // Red
+          '500': { value: '#ef4444' }, // Primary red
+          '600': { value: '#dc2626' }, // Deep red
+          '700': { value: '#b91c1c' }, // Darker red
+          '800': { value: '#991b1b' }, // Deep crimson
+          '900': { value: '#7f1d1d' }, // Dark crimson
+          '950': { value: '#450a0a' }, // Darkest crimson
         },
-        // Enhanced background colors based on specified colors with better contrast
+        // Wind-inspired background colors with cool, airy tones
         bg: {
-          DEFAULT: { value: '#222831' }, // Darkest background as specified
-          subtle: { value: '#2d3441' }, // Enhanced contrast from darkest
-          muted: { value: '#393E46' }, // Gray as specified
-          emphasized: { value: '#4a4f5a' }, // Enhanced contrast from gray
-          elevated: { value: '#5a5f6a' }, // Even more contrast
-          surface: { value: '#6a6f7a' }, // Maximum contrast for surfaces
+          DEFAULT: { value: '#0f172a' }, // Deep night sky
+          subtle: { value: '#1e293b' }, // Dark slate
+          muted: { value: '#334155' }, // Slate gray
+          emphasized: { value: '#475569' }, // Medium slate
+          elevated: { value: '#64748b' }, // Light slate
+          surface: { value: '#94a3b8' }, // Very light slate
         },
-        // Enhanced foreground colors with maximum contrast
+        // Wind-inspired foreground colors with airy contrast
         fg: {
-          DEFAULT: { value: '#ffffff' }, // Pure white for maximum contrast
-          muted: { value: '#e1e5ea' }, // Light gray with high contrast
-          subtle: { value: '#b8c0c8' }, // Medium gray with good contrast
-          disabled: { value: '#8a929a' }, // Darker gray for disabled state
-          inverse: { value: '#222831' }, // Darkest for inverse text
+          DEFAULT: { value: '#f8fafc' }, // Pure white
+          muted: { value: '#e2e8f0' }, // Light gray
+          subtle: { value: '#cbd5e1' }, // Medium gray
+          disabled: { value: '#94a3b8' }, // Slate gray
+          inverse: { value: '#0f172a' }, // Dark for inverse text
         },
-        // Enhanced border colors with better definition and contrast
+        // Wind-inspired border colors with airy definition
         border: {
-          DEFAULT: { value: '#393E46' }, // Gray as specified
-          subtle: { value: '#4a4f5a' }, // Enhanced contrast from gray
-          muted: { value: '#5a5f6a' }, // Even more contrast
-          emphasized: { value: '#6a6f7a' }, // Maximum contrast for borders
-          focus: { value: '#eab308' }, // Brand color for focus states
+          DEFAULT: { value: '#334155' }, // Slate gray
+          subtle: { value: '#475569' }, // Medium slate
+          muted: { value: '#64748b' }, // Light slate
+          emphasized: { value: '#94a3b8' }, // Very light slate
+          focus: { value: '#0ea5e9' }, // Wind blue for focus states
         },
-        // New gradient colors for modern UI with enhanced contrast
+        // Wind-inspired gradient colors representing air flow and movement
         gradient: {
           primary: {
-            value: 'linear-gradient(135deg, #eab308 0%, #ca8a04 100%)',
+            value: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%)', // Sky to cyan
           },
           secondary: {
-            value: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
+            value: 'linear-gradient(135deg, #06b6d4 0%, #14b8a6 100%)', // Cyan to teal
           },
           success: {
-            value: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+            value: 'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)', // Teal gradient
           },
           warning: {
-            value: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+            value: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', // Amber gradient
           },
-          error: { value: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)' },
-          dark: { value: 'linear-gradient(135deg, #393E46 0%, #222831 100%)' }, // Updated with new colors
+          error: {
+            value: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', // Red gradient
+          },
+          wind: {
+            value:
+              'linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #7dd3fc 100%)', // Wind flow
+          },
+          sky: {
+            value:
+              'linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%)', // Sky gradient
+          },
+          air: {
+            value:
+              'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%)', // Air gradient
+          },
           glass: {
             value:
               'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 100%)',
-          }, // Enhanced glass effect
+          },
           subtle: {
-            value: 'linear-gradient(135deg, #2d3441 0%, #222831 100%)',
-          }, // New subtle gradient
+            value: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', // Night sky
+          },
         },
-        // New glow colors for modern effects with enhanced visibility
+        // Wind-inspired glow colors for ethereal effects
         glow: {
-          brand: { value: '0 0 25px rgba(234, 179, 8, 0.4)' }, // Enhanced glow
-          accent: { value: '0 0 25px rgba(14, 165, 233, 0.4)' }, // Enhanced glow
-          success: { value: '0 0 25px rgba(34, 197, 94, 0.4)' }, // Enhanced glow
-          warning: { value: '0 0 25px rgba(245, 158, 11, 0.4)' }, // Enhanced glow
-          error: { value: '0 0 25px rgba(239, 68, 68, 0.4)' }, // Enhanced glow
-          subtle: { value: '0 0 15px rgba(255, 255, 255, 0.1)' }, // New subtle glow
+          brand: { value: '0 0 25px rgba(14, 165, 233, 0.4)' }, // Wind blue glow
+          accent: { value: '0 0 25px rgba(6, 182, 212, 0.4)' }, // Cyan glow
+          success: { value: '0 0 25px rgba(20, 184, 166, 0.4)' }, // Teal glow
+          warning: { value: '0 0 25px rgba(245, 158, 11, 0.4)' }, // Amber glow
+          error: { value: '0 0 25px rgba(239, 68, 68, 0.4)' }, // Red glow
+          wind: { value: '0 0 30px rgba(14, 165, 233, 0.3)' }, // Wind glow
+          sky: { value: '0 0 20px rgba(56, 189, 248, 0.2)' }, // Sky glow
+          air: { value: '0 0 15px rgba(186, 230, 253, 0.15)' }, // Air glow
         },
-        // New semantic colors for better UI hierarchy
+        // Wind-inspired neutral colors with cool undertones
         neutral: {
           '50': { value: '#f8fafc' },
           '100': { value: '#f1f5f9' },
@@ -216,11 +231,11 @@ const config = defineConfig({
         '2xl': { value: '0 25px 50px -12px rgb(0 0 0 / 0.25)' },
         inner: { value: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)' },
         none: { value: 'none' },
-        // Enhanced modern shadows with better contrast
-        glow: { value: '0 0 25px rgba(234, 179, 8, 0.3)' }, // Enhanced glow shadow
-        'glow-lg': { value: '0 0 50px rgba(234, 179, 8, 0.4)' }, // Enhanced large glow
-        glass: { value: '0 8px 32px rgba(0, 0, 0, 0.4)' }, // Enhanced glass shadow
-        'glass-lg': { value: '0 16px 64px rgba(0, 0, 0, 0.5)' }, // New large glass shadow
+        // Wind-inspired shadows with ethereal effects
+        glow: { value: '0 0 25px rgba(14, 165, 233, 0.3)' }, // Wind blue glow shadow
+        'glow-lg': { value: '0 0 50px rgba(14, 165, 233, 0.4)' }, // Large wind glow
+        glass: { value: '0 8px 32px rgba(0, 0, 0, 0.4)' }, // Glass shadow
+        'glass-lg': { value: '0 16px 64px rgba(0, 0, 0, 0.5)' }, // Large glass shadow
       },
       spacing: {
         1: { value: '0.25rem' },
@@ -390,16 +405,16 @@ const config = defineConfig({
           '4': { value: '{colors.warning.500}' },
           '5': { value: '{colors.error.500}' },
         },
-        // Enhanced semantic tokens for modern UI patterns with better contrast
+        // Wind-inspired semantic tokens for ethereal UI patterns
         glass: {
-          DEFAULT: { value: 'rgba(255, 255, 255, 0.15)' }, // Enhanced glass effect
-          border: { value: 'rgba(255, 255, 255, 0.25)' }, // Enhanced border
-          backdrop: { value: 'rgba(34, 40, 49, 0.9)' }, // Enhanced backdrop
+          DEFAULT: { value: 'rgba(255, 255, 255, 0.15)' }, // Airy glass effect
+          border: { value: 'rgba(255, 255, 255, 0.25)' }, // Airy border
+          backdrop: { value: 'rgba(15, 23, 42, 0.9)' }, // Night sky backdrop
         },
         overlay: {
-          DEFAULT: { value: 'rgba(34, 40, 49, 0.6)' }, // Enhanced overlay
-          light: { value: 'rgba(34, 40, 49, 0.4)' }, // Enhanced light overlay
-          heavy: { value: 'rgba(34, 40, 49, 0.9)' }, // Enhanced heavy overlay
+          DEFAULT: { value: 'rgba(15, 23, 42, 0.6)' }, // Night sky overlay
+          light: { value: 'rgba(15, 23, 42, 0.4)' }, // Light night sky overlay
+          heavy: { value: 'rgba(15, 23, 42, 0.9)' }, // Heavy night sky overlay
         },
       },
     },

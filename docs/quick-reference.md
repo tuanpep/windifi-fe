@@ -170,9 +170,8 @@ Development → Staging → Production
 
 ## 📚 Documentation
 
-- **[Development Guide](./development-guide.md)** - Complete guide
-- **[Git Flow Strategy](./git-flow.md)** - Detailed git flow
-- **[Commit Message Rules](./commit-message-rules.md)** - Detailed commit rules
+- **[Development Guide](./development-guide.md)** - Complete development workflow
+- **[Project Structure](./project-structure.md)** - Architecture and folder organization
 
 ---
 
